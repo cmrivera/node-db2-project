@@ -1,20 +1,23 @@
 const express = require("express");
-const helmet = require("helmet");
+//const helmet = require("helmet")
+
 const carsRouter = require("./cars/cars-router");
-
 const server = express();
-const port = process.env.port || 5000;
 
-server.use(helmet());
+const PORT = process.env.PORT || 5300;
+
 server.use(express.json());
 
-server.use(carsRouter);
+//server.use(helmet())
+server.use("/cars", carsRouter);
 
-server.use((err, req, res, nexr) => {
+server.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).json({ message: "something went wrong" });
+  res.status(500).json({
+    message: "Something went wrong",
+  });
 });
 
 server.listen(port, () => {
-  console.log(`Running api on http://localhost:${port}`);
+  console.log(`Running at http://localhost:${port}`);
 });
